@@ -1,2 +1,3 @@
 # NoriNoriPython
-A python script to play "Unwelcome Scholl" from "blue archive".
+ブルーアーカイブの「Unwelcome School」をPythonで実装して、ノリノリになりたいときに使って下さい。
+Pythonのココが凄い！！！
