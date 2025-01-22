@@ -10,240 +10,241 @@ from scipy.io.wavfile import write
 from pydub import AudioSegment
 from IPython.display import Audio
 
-L = 8; T = 4
-
 # scales as integers.
-Cu = -11
-CuS = -10
-Du = -9
-DuS = -8
-Eu = -7
-Fu = -6
-FuS = -5
-Gu = -4
-GuS = -3
-Au = -2
-AuS = -1
-Bu = 0
+C_lower = -11
+C_sharp_lower = -10
+D_lower = -9
+D_sharp_lower = -8
+E_lower = -7
+F_lower = -6
+F_sharp_lower = -5
+G_lower = -4
+G_sharp_lower = -3
+A_lower = -2
+A_sharp_lower = -1
+B_lower = 0
 C = 1
-CS = 2
+C_sharp = 2
 D = 3
-DS = 4
+D_sharp = 4
 E = 5
 F = 6
-FS = 7
+F_Sharp = 7
 G = 8
-GS = 9
+G_sharp = 9
 A = 10
-AS = 11
+A_sharp = 11
 B = 12
-C1 = 13
-C1S = 14
-D1 = 15
-D1S = 16
-E1 = 17
-F1 = 18
-F1S = 19
-G1 = 20
-G1S = 21
-A1 = 22
-A1S = 23
-B1 = 24
+C_upper = 13
+C_sharp_upper = 14
+D_upper = 15
+D_sharp_upper = 16
+E_upper = 17
+F_upper = 18
+F_sharp_upper = 19
+G_upper = 20
+G_sharp_upper = 21
+A_upper = 22
+A_sharp_upper = 23
+B_upper = 24
 
 
 # Pythagorean scale like(?)
-PythagorasTuning = np.hstack([0, 440 * 2 ** ((np.arange(36) - 20) / 12)])
+pythagoras_tuning = np.hstack([0, 440 * 2 ** ((np.arange(36) - 20) / 12)])
 
-Notes = np.arange(36) - 11
+notes = np.arange(36) - 11
 dic = {}
-for i, s in enumerate(Notes):
+for i, s in enumerate(notes):
     dic[s] = i
 
+def playMusic(score: list, music_name: str) -> None:
+    """A function that generates music with wav format by given list representing score.
 
-# Generates music
-def PlayMusic(Score, name):
+    Args:
+        score (list): list that represents score
+        music_name (str): name of wav file
+    """
     rate = 48000
-    BPM = 180 * T
+    bpm = 180 * 4
     music = np.array([])
-    for s in Score:
-        d = 60 / BPM * s[1]
+    for s in score:
+        d = 60 / bpm * s[1]
         t = np.linspace(0, d, int(rate * d))
-        f = PythagorasTuning[dic[s[0]]]
+        f = pythagoras_tuning[dic[s[0]]]
         music = np.append(music, np.sin((np.pi + np.pi) * f * t))
 
     music = np.asarray(music, dtype = np.float32)
-    write(name, rate = rate, data = music)
+    write(music_name, rate = rate, data = music)
 
 
 # score
-UnwelcomeSchool1 = [
+unwelcome_schoole_1 = [
     [A, 4],
-    [C1, 4],
-    [D1S, 3],
-    [E1, 3],
-    [GS, 2],
+    [C_upper, 4],
+    [D_sharp_upper, 3],
+    [E_upper, 3],
+    [G_sharp, 2],
     [A, 2],
-    [C1, 2],
-    [D1, 2],
-    [C1, 2],
-    [D1S, 3],
-    [E1, 5],
-    [G1, 2],
-    [F1S, 2],
-    [F1, 2],
-    [E1, 2],
-    [D1, 2],
-    [C1, 2],
+    [C_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
+    [D_sharp_upper, 3],
+    [E_upper, 5],
+    [G_upper, 2],
+    [F_sharp_upper, 2],
+    [F_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
     [B, 2],
-    [AS, 2],
+    [A_sharp, 2],
     [B, 2],
-    [C1, 2],
-    [D1, 2],
-    [D1S, 2],
-    [E1, 4],
-    [GS, 4]
+    [C_upper, 2],
+    [D_upper, 2],
+    [D_sharp_upper, 2],
+    [E_upper, 4],
+    [G_sharp, 4]
 ]
 
-UnwelcomeSchool2 = [
+unwelcome_schoole_2 = [
     [A, 4],
-    [C1, 4],
-    [D1S, 3],
-    [E1, 3],
-    [GS, 2],
+    [C_upper, 4],
+    [D_sharp_upper, 3],
+    [E_upper, 3],
+    [G_sharp, 2],
     [A, 2],
-    [C1, 2],
-    [D1, 2],
-    [C1, 2],
-    [D1S, 3],
-    [E1, 5],
-    [G1, 2],
-    [F1S, 2],
-    [F1, 2],
-    [E1, 2],
-    [E1, 2],
-    [F1, 2],
-    [F1S, 2],
-    [G1, 2],
-    [G1S, 2],
-    [G1S, 2],
-    [A1, 2],
-    [A1, 2],
-    [B1, 8]
+    [C_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
+    [D_sharp_upper, 3],
+    [E_upper, 5],
+    [G_upper, 2],
+    [F_sharp_upper, 2],
+    [F_upper, 2],
+    [E_upper, 2],
+    [E_upper, 2],
+    [F_upper, 2],
+    [F_sharp_upper, 2],
+    [G_upper, 2],
+    [G_sharp_upper, 2],
+    [G_sharp_upper, 2],
+    [A_upper, 2],
+    [A_upper, 2],
+    [B_upper, 8]
 ]
 
-UnwelcomeSchool3 = [
-    [E1, 2],
-    [D1, 2],
-    [E1, 2],
-    [F1, 2],
-    [E1, 2],
-    [D1, 2],
-    [C1, 2],
-    [D1, 2],
-    [E1, 2],
-    [D1, 2],
-    [E1, 2],
-    [F1, 2],
-    [E1, 2],
-    [D1, 2],
-    [C1, 2],
+unwelcome_schoole_3 = [
+    [E_upper, 2],
+    [D_upper, 2],
+    [E_upper, 2],
+    [F_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
+    [D_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [E_upper, 2],
+    [F_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
     [B, 2],
     [A, 4],
-    [A1, 4],
-    [G1S, 4],
-    [G1, 4],
-    [F1, 4],
-    [E1, 4],
-    [D1S, 4],
-    [E1, 4]
+    [A_upper, 4],
+    [G_sharp_upper, 4],
+    [G_upper, 4],
+    [F_upper, 4],
+    [E_upper, 4],
+    [D_sharp_upper, 4],
+    [E_upper, 4]
 ]
 
-UnwelcomeSchool4 = [
-    [E1, 2],
-    [D1, 2],
-    [E1, 2],
-    [F1, 2],
-    [E1, 2],
-    [D1, 2],
-    [C1, 2],
-    [D1, 2],
-    [E1, 2],
-    [D1, 2],
-    [E1, 2],
-    [F1, 2],
-    [E1, 2],
-    [D1, 2],
-    [C1, 2],
-    [D1, 2],
-    [A1, 4],
+unwelcome_schoole_4 = [
+    [E_upper, 2],
+    [D_upper, 2],
+    [E_upper, 2],
+    [F_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
+    [D_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [E_upper, 2],
+    [F_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
+    [D_upper, 2],
+    [A_upper, 4],
     [A, 4],
     [B, 4],
-    [C1, 4],
-    [C1S, 4],
-    [D1, 4],
-    [F1, 4],
-    [E1, 4]
+    [C_upper, 4],
+    [C_sharp_upper, 4],
+    [D_upper, 4],
+    [F_upper, 4],
+    [E_upper, 4]
 ]
 
-UnwelcomeSchool5 = [
-    [E1, 2],
-    [D1, 2],
-    [E1, 2],
-    [F1, 2],
-    [E1, 2],
-    [D1, 2],
-    [C1, 2],
-    [D1, 2],
-    [E1, 2],
-    [D1, 2],
-    [E1, 2],
-    [F1, 2],
-    [E1, 2],
-    [D1, 2],
-    [C1, 2],
+unwelcome_schoole_5 = [
+    [E_upper, 2],
+    [D_upper, 2],
+    [E_upper, 2],
+    [F_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
+    [D_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [E_upper, 2],
+    [F_upper, 2],
+    [E_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
     [B, 2],
     [A, 4],
-    [D1S, 2],
-    [C1, 2],
-    [D1, 2],
-    [C1, 2],
+    [D_sharp_upper, 2],
+    [C_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
     [A, 2],
-    [C1, 2],
-    [D1S, 2],
-    [C1, 2],
-    [D1, 2],
-    [C1, 14],
-    [D1S, 2],
-    [C1, 2],
-    [D1, 2],
-    [C1, 2],
+    [C_upper, 2],
+    [D_sharp_upper, 2],
+    [C_upper, 2],
+    [D_upper, 2],
+    [C_upper, 14],
+    [D_sharp_upper, 2],
+    [C_upper, 2],
+    [D_upper, 2],
+    [C_upper, 2],
     [A, 2],
-    [C1, 2],
-    [D1S, 2],
-    [C1, 2],
-    [D1, 2],
-    [C1, 10]
+    [C_upper, 2],
+    [D_sharp_upper, 2],
+    [C_upper, 2],
+    [D_upper, 2],
+    [C_upper, 10]
 ]
 
-AE = [[Au, 2], [E, 2]]
-FC = [[Fu, 2], [C, 2]]
-GB = [[Gu, 2], [D, 2]]
+AE = [[A_lower, 2], [E, 2]]
+FC = [[F_lower, 2], [C, 2]]
+GB = [[G_lower, 2], [D, 2]]
 CG = [[C, 2], [G, 2]]
 
-UnwelcomeSchoolSub = (AE * 8 + FC * 4 + GB * 4) * 6 + (FC * 4 + GB * 4 + AE * 4 + CG * 4) * 3 + FC * 4 + GB * 4
-UnwelcomeSchool = (UnwelcomeSchool1 + UnwelcomeSchool2) * 3 + UnwelcomeSchool3 + UnwelcomeSchool4 + UnwelcomeSchool3 + UnwelcomeSchool5
+sub_melody = (AE * 8 + FC * 4 + GB * 4) * 6 + (FC * 4 + GB * 4 + AE * 4 + CG * 4) * 3 + FC * 4 + GB * 4
+main_melody = (unwelcome_schoole_1 + unwelcome_schoole_2) * 3 + unwelcome_schoole_3 + unwelcome_schoole_4 + unwelcome_schoole_3 + unwelcome_schoole_5
 
 
 # Generate wav files
-PlayMusic(UnwelcomeSchool, 'NoriNoriMain.wav')
-PlayMusic(UnwelcomeSchoolSub, 'NoriNoriSub.wav')
-
+playMusic(main_melody, 'NoriNoriMain.wav')
+playMusic(sub_melody, 'NoriNoriSub.wav')
 
 # synthesis wav files
-Main = AudioSegment.from_file('NoriNoriMain.wav')
-Sub = AudioSegment.from_file('NoriNoriSub.wav')
+main_melody = AudioSegment.from_file('NoriNoriMain.wav')
+sub_melody = AudioSegment.from_file('NoriNoriSub.wav')
 
-output = Main.overlay(Sub, position = 0)
+output = main_melody.overlay(sub_melody, position = 0)
 output.export('NoriNoriPython.wav', format = 'wav')
 
 
